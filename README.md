@@ -1,3 +1,3 @@
-# Checkpoint 1 - Enterprise Application Development 
+# Checkpoint 1 
 
-EntityFramework - FIAP
+# Enterprise Application Development EntityFramework - FIAP
