@@ -1,6 +1,6 @@
 ﻿namespace CP1Enterprise_EntityFramework_FIAP.Validations
 {
-    public class FileName
+    public class RegrasEspeciaisValidator
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CP1Enterprise_EntityFramework_FIAP.Entities
 {
-    public class Permissao
+    public class Ilustrador
     {
     }
 }
