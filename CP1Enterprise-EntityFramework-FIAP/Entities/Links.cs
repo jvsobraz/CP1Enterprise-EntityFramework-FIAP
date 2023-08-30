@@ -1,5 +1,4 @@
-﻿using CP1Enterprise_EntityFramework_FIAP.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 
