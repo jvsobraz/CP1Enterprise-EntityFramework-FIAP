@@ -7,100 +7,100 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HookingHotels.Web.Data;
-using HookingHotels.Web.Entities;
-using HookingHotels.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Web.Data;
+using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
+using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
 
-namespace HookingHotels.Web.Controllers
+namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class HospedeController : Controller
     {
-        private readonly HookingDbContext _context;
+        private readonly ScryfallDbContext _context;
 
 
-        public HospedeController(HookingDbContext context)
+        public CartaController(ScryfallDbContext context)
         {
             _context = context;
         }
 
-        // GET: Hospede
+        // GET: Carta
         public async Task<IActionResult> Index()
         {
-            return _context.Hospedes != null ?
-                        View(await _context.Hospedes.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'HookingDbContext.Hospedes'  is null.");
+            return _context.Cartas != null ?
+                        View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
+                        Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
-            return _context.Hospedes != null ?
-                View(await _context.Hospedes.ToListAsync()) :
-                Problem("Entity set 'HookingDbContext.Hospedes'  is null.");
+            return _context.Cartas != null ?
+                View(await _context.Cartas.ToListAsync()) :
+                Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
         }
 
-        // GET: Hospede/Details/5
+        // GET: Carta/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Hospedes == null)
+            if (id == null || _context.Cartas == null)
             {
                 return NotFound();
             }
 
-            var hospede = await _context.Hospedes
-                .FirstOrDefaultAsync(m => m.HospedeId == id);
-            if (hospede == null)
+            var carta = await _context.Cartas
+                .FirstOrDefaultAsync(m => m.CartaId == id);
+            if (carta == null)
             {
                 return NotFound();
             }
 
-            return View(hospede);
+            return View(carta);
         }
 
-        // GET: Hospede/Create
+        // GET: carta/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Hospede/Create
+        // POST: carta/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HospedeId,Nome,Email,Telefone,Endereco,EstaAtivo")] Hospede hospede)
+        public async Task<IActionResult> Create([Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
         {
 
-            if (!ModelState.IsValid) return View(hospede);
+            if (!ModelState.IsValid) return View(carta);
 
-            _context.Add(hospede);
+            _context.Add(carta);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Hospede/Edit/5
+        // GET: Carta/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Hospedes == null)
+            if (id == null || _context.Cartas == null)
             {
                 return NotFound();
             }
 
-            var hospede = await _context.Hospedes.FindAsync(id);
-            if (hospede == null)
+            var carta = await _context.Cartas.FindAsync(id);
+            if (carta == null)
             {
                 return NotFound();
             }
-            return View(hospede);
+            return View(carta);
         }
 
-        // POST: Hospede/Edit/5
+        // POST: Carta/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HospedeId,Nome,Email,Telefone,Endereco,EstaAtivo")] Hospede hospede)
+        public async Task<IActionResult> Edit(int id, [Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
         {
-            if (id != hospede.HospedeId)
+            if (id != carta.CartaId)
             {
                 return NotFound();
             }
@@ -109,12 +109,12 @@ namespace HookingHotels.Web.Controllers
             {
                 try
                 {
-                    _context.Update(hospede);
+                    _context.Update(carta);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HospedeExists(hospede.HospedeId))
+                    if (!CartaExists(carta.CartaId))
                     {
                         return NotFound();
                     }
@@ -125,49 +125,49 @@ namespace HookingHotels.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hospede);
+            return View(carta);
         }
 
-        // GET: Hospede/Delete/5
+        // GET: Carta/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Hospedes == null)
+            if (id == null || _context.Cartas == null)
             {
                 return NotFound();
             }
 
-            var hospede = await _context.Hospedes
-                .FirstOrDefaultAsync(m => m.HospedeId == id);
-            if (hospede == null)
+            var carta = await _context.Cartas
+                .FirstOrDefaultAsync(m => m.CartaId == id);
+            if (carta == null)
             {
                 return NotFound();
             }
 
-            return View(hospede);
+            return View(carta);
         }
 
-        // POST: Hospede/Delete/5
+        // POST: Carta/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Hospedes == null)
+            if (_context.Cartas == null)
             {
-                return Problem("Entity set 'HookingDbContext.Hospedes'  is null.");
+                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
             }
-            var hospede = await _context.Hospedes.FindAsync(id);
-            if (hospede != null)
+            var carta = await _context.Cartas.FindAsync(id);
+            if (carta != null)
             {
-                _context.Hospedes.Remove(hospede);
+                _context.Cartas.Remove(carta);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HospedeExists(int id)
+        private bool CartaExists(int id)
         {
-            return (_context.Hospedes?.Any(e => e.HospedeId == id)).GetValueOrDefault();
+            return (_context.Cartas?.Any(e => e.CartaId == id)).GetValueOrDefault();
         }
     }
 }
