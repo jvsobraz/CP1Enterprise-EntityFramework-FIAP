@@ -1,4 +1,5 @@
 ﻿using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 

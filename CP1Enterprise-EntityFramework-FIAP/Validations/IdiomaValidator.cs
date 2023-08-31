@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
+﻿using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
+using FluentValidation;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Validations;
 

@@ -5,7 +5,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 public class Ilustrador
 {
     [Key]
-    public int CartaId { get; set; }
+    public int IlustradorId { get; set; }
 
     public string Nome { get; set; }
 
