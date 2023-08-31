@@ -13,94 +13,94 @@ using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
-    public class HospedeController : Controller
+    public class RegrasEspeciaisController : Controller
     {
         private readonly ScryfallDbContext _context;
 
 
-        public CartaController(ScryfallDbContext context)
+        public RegrasEspeciaisController(ScryfallDbContext context)
         {
             _context = context;
         }
 
-        // GET: Carta
+        // GET: RegrasEspeciais
         public async Task<IActionResult> Index()
         {
-            return _context.Cartas != null ?
-                        View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.RegrasEspeciais != null ?
+                        View(await _context.RegrasEspeciais.Where(x => x.EstaAtivo == true).ToListAsync()) :
+                        Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
-            return _context.Cartas != null ?
-                View(await _context.Cartas.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.RegrasEspeciais != null ?
+                View(await _context.RegrasEspeciais.ToListAsync()) :
+                Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
         }
 
-        // GET: Carta/Details/5
+        // GET: RegrasEspeciais/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.RegrasEspeciais == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var regrasEspeciais = await _context.RegrasEspeciais
+                .FirstOrDefaultAsync(m => m.RegrasEspeciaisId == id);
+            if (regrasEspeciais == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(regrasEspeciais);
         }
 
-        // GET: carta/Create
+        // GET: RegrasEspeciais/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: carta/Create
+        // POST: RegrasEspeciais/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Create([Bind("RegrasEspeciaisId,Descricao,Data")] RegrasEspeciais regrasEspeciais)
         {
 
-            if (!ModelState.IsValid) return View(carta);
+            if (!ModelState.IsValid) return View(regrasEspeciais);
 
-            _context.Add(carta);
+            _context.Add(regrasEspeciais);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Carta/Edit/5
+        // GET: RegrasEspeciais/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.RegrasEspeciais == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta == null)
+            var regrasEspeciais = await _context.RegrasEspeciais.FindAsync(id);
+            if (regrasEspeciais == null)
             {
                 return NotFound();
             }
-            return View(carta);
+            return View(regrasEspeciais);
         }
 
-        // POST: Carta/Edit/5
+        // POST: RegrasEspeciais/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Edit(int id, [Bind("RegrasEspeciaisId,Descricao,Data")] RegrasEspeciais regrasEspeciais)
         {
-            if (id != carta.CartaId)
+            if (id != regrasEspeciais.RegrasEspeciaisId)
             {
                 return NotFound();
             }
@@ -109,12 +109,12 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             {
                 try
                 {
-                    _context.Update(carta);
+                    _context.Update(regrasEspeciais);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartaExists(carta.CartaId))
+                    if (!RegrasEspeciaisExists(regrasEspeciais.RegrasEspeciaisId))
                     {
                         return NotFound();
                     }
@@ -125,49 +125,49 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carta);
+            return View(regrasEspeciais);
         }
 
-        // GET: Carta/Delete/5
+        // GET: RegrasEspeciais/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.RegrasEspeciais == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var regrasEspeciais = await _context.RegrasEspeciais
+                .FirstOrDefaultAsync(m => m.RegrasEspeciaisId == id);
+            if (regrasEspeciais == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(regrasEspeciais);
         }
 
-        // POST: Carta/Delete/5
+        // POST: RegrasEspeciais/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Cartas == null)
+            if (_context.RegrasEspeciais == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                return Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
             }
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta != null)
+            var regrasEspeciais = await _context.RegrasEspeciais.FindAsync(id);
+            if (regrasEspeciais != null)
             {
-                _context.Cartas.Remove(carta);
+                _context.Cartas.Remove(regrasEspeciais);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CartaExists(int id)
+        private bool RegrasEspeciaisExists(int id)
         {
-            return (_context.Cartas?.Any(e => e.CartaId == id)).GetValueOrDefault();
+            return (_context.RegrasEspeciais?.Any(e => e.RegrasEspeciaisId == id)).GetValueOrDefault();
         }
     }
 }

@@ -13,94 +13,94 @@ using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
-    public class HospedeController : Controller
+    public class LinksController : Controller
     {
         private readonly ScryfallDbContext _context;
 
 
-        public CartaController(ScryfallDbContext context)
+        public LinksController(ScryfallDbContext context)
         {
             _context = context;
         }
 
-        // GET: Carta
+        // GET: Links
         public async Task<IActionResult> Index()
         {
-            return _context.Cartas != null ?
-                        View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.Links != null ?
+                        View(await _context.Links.Where(x => x.EstaAtivo == true).ToListAsync()) :
+                        Problem("Entity set 'ScryfallDbContext.Links'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
-            return _context.Cartas != null ?
-                View(await _context.Cartas.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.Links != null ?
+                View(await _context.Links.ToListAsync()) :
+                Problem("Entity set 'ScryfallDbContext.Links'  is null.");
         }
 
-        // GET: Carta/Details/5
+        // GET: Links/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Links == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var links = await _context.Links
+                .FirstOrDefaultAsync(m => m.LinksId == id);
+            if (links == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(links);
         }
 
-        // GET: carta/Create
+        // GET: Links/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: carta/Create
+        // POST: Links/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Create([Bind("LinksId,Url")] Links links)
         {
 
-            if (!ModelState.IsValid) return View(carta);
+            if (!ModelState.IsValid) return View(links);
 
-            _context.Add(carta);
+            _context.Add(links);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Carta/Edit/5
+        // GET: Links/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Links == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta == null)
+            var links = await _context.Links.FindAsync(id);
+            if (links == null)
             {
                 return NotFound();
             }
-            return View(carta);
+            return View(links);
         }
 
-        // POST: Carta/Edit/5
+        // POST: Links/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Edit(int id, [Bind("LinksId,Url")] Links links)
         {
-            if (id != carta.CartaId)
+            if (id != links.LinksId)
             {
                 return NotFound();
             }
@@ -109,12 +109,12 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             {
                 try
                 {
-                    _context.Update(carta);
+                    _context.Update(links);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartaExists(carta.CartaId))
+                    if (!CartaExists(links.LinksId))
                     {
                         return NotFound();
                     }
@@ -125,49 +125,49 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carta);
+            return View(links);
         }
 
-        // GET: Carta/Delete/5
+        // GET: Links/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Links == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var links = await _context.Links
+                .FirstOrDefaultAsync(m => m.LinksId == id);
+            if (links == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(links);
         }
 
-        // POST: Carta/Delete/5
+        // POST: Links/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Cartas == null)
+            if (_context.Links == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                return Problem("Entity set 'ScryfallDbContext.Links'  is null.");
             }
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta != null)
+            var links = await _context.Links.FindAsync(id);
+            if (links != null)
             {
-                _context.Cartas.Remove(carta);
+                _context.Cartas.Remove(links);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CartaExists(int id)
+        private bool LinksExists(int id)
         {
-            return (_context.Cartas?.Any(e => e.CartaId == id)).GetValueOrDefault();
+            return (_context.Links?.Any(e => e.LinksId == id)).GetValueOrDefault();
         }
     }
 }

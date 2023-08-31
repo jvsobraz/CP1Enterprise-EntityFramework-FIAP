@@ -13,94 +13,94 @@ using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
-    public class HospedeController : Controller
+    public class IdiomaController : Controller
     {
         private readonly ScryfallDbContext _context;
 
 
-        public CartaController(ScryfallDbContext context)
+        public IdiomaController(ScryfallDbContext context)
         {
             _context = context;
         }
 
-        // GET: Carta
+        // GET: Idioma
         public async Task<IActionResult> Index()
         {
-            return _context.Cartas != null ?
-                        View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.Idiomas != null ?
+                        View(await _context.Idiomas.Where(x => x.EstaAtivo == true).ToListAsync()) :
+                        Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
-            return _context.Cartas != null ?
-                View(await _context.Cartas.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+            return _context.Idiomas != null ?
+                View(await _context.Idiomas.ToListAsync()) :
+                Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
         }
 
-        // GET: Carta/Details/5
+        // GET: Idioma/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Idiomas == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var idioma = await _context.Idiomas
+                .FirstOrDefaultAsync(m => m.IdiomaId == id);
+            if (idioma == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(idioma);
         }
 
-        // GET: carta/Create
+        // GET: idioma/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: carta/Create
+        // POST: Idioma/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Create([Bind("IdiomaId,Nome")] Idioma idioma)
         {
 
-            if (!ModelState.IsValid) return View(carta);
+            if (!ModelState.IsValid) return View(idioma);
 
-            _context.Add(carta);
+            _context.Add(idioma);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Carta/Edit/5
+        // GET: Idioma/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Idiomas == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta == null)
+            var idioma = await _context.Idiomas.FindAsync(id);
+            if (idioma == null)
             {
                 return NotFound();
             }
-            return View(carta);
+            return View(idioma);
         }
 
-        // POST: Carta/Edit/5
+        // POST: Idioma/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdiomaId,Nome")] Idioma idioma)
         {
-            if (id != carta.CartaId)
+            if (id != idioma.IdiomaId)
             {
                 return NotFound();
             }
@@ -109,12 +109,12 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             {
                 try
                 {
-                    _context.Update(carta);
+                    _context.Update(idioma);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartaExists(carta.CartaId))
+                    if (!IdiomaExists(idioma.IdiomaId))
                     {
                         return NotFound();
                     }
@@ -125,49 +125,49 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(carta);
+            return View(idioma);
         }
 
-        // GET: Carta/Delete/5
+        // GET: Idioma/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Cartas == null)
+            if (id == null || _context.Idiomas == null)
             {
                 return NotFound();
             }
 
-            var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
-            if (carta == null)
+            var idioma = await _context.Idiomas
+                .FirstOrDefaultAsync(m => m.IdiomaId == id);
+            if (idioma == null)
             {
                 return NotFound();
             }
 
-            return View(carta);
+            return View(idioma);
         }
 
-        // POST: Carta/Delete/5
+        // POST: Idioma/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Cartas == null)
+            if (_context.Idiomas == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                return Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
             }
-            var carta = await _context.Cartas.FindAsync(id);
-            if (carta != null)
+            var idioma = await _context.Idiomas.FindAsync(id);
+            if (idioma != null)
             {
-                _context.Cartas.Remove(carta);
+                _context.Idiomas.Remove(idioma);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CartaExists(int id)
+        private bool IdiomaExists(int id)
         {
-            return (_context.Cartas?.Any(e => e.CartaId == id)).GetValueOrDefault();
+            return (_context.Idiomas?.Any(e => e.IdiomaId == id)).GetValueOrDefault();
         }
     }
 }
