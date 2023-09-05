@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HookingHotels.Web.Entities.Hospede>
+﻿@model IEnumerable<CP1Enterprise_EntityFramework_FIAP.Web.Entities.Carta>
 
 @{
     ViewData["Title"] = "Index";
@@ -17,16 +17,13 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefone)
+                @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Endereco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstaAtivo)
+                @Html.DisplayNameFor(model => model.FotoUrl)
             </th>
             <th></th>
         </tr>
@@ -39,21 +36,21 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Tipo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Telefone)
+                    @Html.DisplayFor(modelItem => item.Descricao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Endereco)
+                    @Html.DisplayFor(modelItem => item.FotoUrl)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EstaAtivo)
+                    @Html.DisplayFor(modelItem => item.Carta.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.HospedeId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.HospedeId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.HospedeId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.CartaId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CartaId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CartaId">Delete</a>
                 </td>
             </tr>
         }

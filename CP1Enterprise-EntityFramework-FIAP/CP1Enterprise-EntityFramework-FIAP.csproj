@@ -9,11 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Colecao\" />
-    <Folder Include="Views\Idioma\" />
-    <Folder Include="Views\Ilustrador\" />
-    <Folder Include="Views\Links\" />
-    <Folder Include="Views\RegrasEspeciais\" />
   </ItemGroup>
 
   <ItemGroup>
