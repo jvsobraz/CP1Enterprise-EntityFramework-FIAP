@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class RegrasEspeciaisController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public RegrasEspeciaisController(ScryfallDbContext context)
+        public RegrasEspeciaisController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,14 +29,14 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.RegrasEspeciais != null ?
                         View(await _context.RegrasEspeciais.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
+                        Problem("Entity set 'OracleDbContext.RegrasEspeciais'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
             return _context.RegrasEspeciais != null ?
                 View(await _context.RegrasEspeciais.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
+                Problem("Entity set 'OracleDbContext.RegrasEspeciais'  is null.");
         }
 
         // GET: RegrasEspeciais/Details/5
@@ -153,7 +154,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.RegrasEspeciais == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.RegrasEspeciais'  is null.");
+                return Problem("Entity set 'OracleDbContext.RegrasEspeciais'  is null.");
             }
             var regrasEspeciais = await _context.RegrasEspeciais.FindAsync(id);
             if (regrasEspeciais != null)

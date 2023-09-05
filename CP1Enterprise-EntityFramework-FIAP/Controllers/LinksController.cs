@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class LinksController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public LinksController(ScryfallDbContext context)
+        public LinksController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,7 +29,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.Links != null ?
                         View(await _context.Links.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Links'  is null.");
+                        Problem("Entity set 'OracleDbContext.Links'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
@@ -153,7 +154,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.Links == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Links'  is null.");
+                return Problem("Entity set 'OracleDbContext.Links'  is null.");
             }
             var links = await _context.Links.FindAsync(id);
             if (links != null)

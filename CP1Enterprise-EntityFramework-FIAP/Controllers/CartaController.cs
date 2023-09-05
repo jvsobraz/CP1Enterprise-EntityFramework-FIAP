@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
-using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class HospedeController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public CartaController(ScryfallDbContext context)
+        public CartaController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,14 +21,14 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.Cartas != null ?
                         View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                        Problem("Entity set 'OracleDbContext.Cartas'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
             return _context.Cartas != null ?
                 View(await _context.Cartas.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                Problem("Entity set 'OracleDbContext.Cartas'  is null.");
         }
 
         // GET: Carta/Details/5
@@ -153,7 +146,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.Cartas == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                return Problem("Entity set 'OracleDbContext.Cartas'  is null.");
             }
             var carta = await _context.Cartas.FindAsync(id);
             if (carta != null)

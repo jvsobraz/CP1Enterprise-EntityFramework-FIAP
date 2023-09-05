@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class IlustradorController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public IlustradorController(ScryfallDbContext context)
+        public IlustradorController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,14 +29,14 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.Ilustradores != null ?
                         View(await _context.Ilustradores.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Ilustradores'  is null.");
+                        Problem("Entity set 'OracleDbContext.Ilustradores'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
             return _context.Ilustradores != null ?
                 View(await _context.Ilustradores.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Ilustradores'  is null.");
+                Problem("Entity set 'OracleDbContext.Ilustradores'  is null.");
         }
 
         // GET: Ilustrador/Details/5
@@ -153,7 +154,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.Ilustradores == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Ilustradores'  is null.");
+                return Problem("Entity set 'OracleDbContext.Ilustradores'  is null.");
             }
             var ilustrador = await _context.Ilustradores.FindAsync(id);
             if (ilustrador != null)

@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class ColecaoController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public ColecaoController(ScryfallDbContext context)
+        public ColecaoController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,14 +29,14 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.Colecoes != null ?
                         View(await _context.Colecoes.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Colecoes'  is null.");
+                        Problem("Entity set 'OracleDbContext.Colecoes'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
             return _context.Colecoes != null ?
                 View(await _context.Colecoes.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Colecoes'  is null.");
+                Problem("Entity set 'OracleDbContext.Colecoes'  is null.");
         }
 
         // GET: Colecao/Details/5
@@ -153,7 +154,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.Colecoes == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Cartas'  is null.");
+                return Problem("Entity set 'OracleDbContext.Cartas'  is null.");
             }
             var colecao = await _context.Cartas.FindAsync(id);
             if (colecao != null)

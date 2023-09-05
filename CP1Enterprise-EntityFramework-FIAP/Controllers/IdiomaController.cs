@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Data;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
     public class IdiomaController : Controller
     {
-        private readonly ScryfallDbContext _context;
+        private readonly OracleDbContext _context;
 
 
-        public IdiomaController(ScryfallDbContext context)
+        public IdiomaController(OracleDbContext context)
         {
             _context = context;
         }
@@ -28,14 +29,14 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             return _context.Idiomas != null ?
                         View(await _context.Idiomas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
+                        Problem("Entity set 'OracleDbContext.Idiomas'  is null.");
         }
 
         public async Task<IActionResult> IndexAll()
         {
             return _context.Idiomas != null ?
                 View(await _context.Idiomas.ToListAsync()) :
-                Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
+                Problem("Entity set 'OracleDbContext.Idiomas'  is null.");
         }
 
         // GET: Idioma/Details/5
@@ -153,7 +154,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         {
             if (_context.Idiomas == null)
             {
-                return Problem("Entity set 'ScryfallDbContext.Idiomas'  is null.");
+                return Problem("Entity set 'OracleDbContext.Idiomas'  is null.");
             }
             var idioma = await _context.Idiomas.FindAsync(id);
             if (idioma != null)
