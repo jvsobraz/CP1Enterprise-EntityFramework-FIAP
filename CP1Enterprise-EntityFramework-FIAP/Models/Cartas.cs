@@ -11,3 +11,6 @@ namespace CP1Enterprise_EntityFramework_FIAP.Models
         public string Tipo { get; set; }
         public string Descricao { get; set; }
         public string FotoUrl { get; set; }
+    }
+
+}

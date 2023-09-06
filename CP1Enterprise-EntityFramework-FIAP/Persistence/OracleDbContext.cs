@@ -20,8 +20,10 @@ public class OracleDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Carta>()
-            .HasOne(r => r.Colecoes)
-            .WithMany(q => q.Idioma)
+            .HasOne(carta => carta.Colecoes)  // Relacionamento de Carta com Colecao
+            .WithMany(colecao => colecao.Cartas)  // Uma Colecao pode ter várias Cartas
+            .HasForeignKey(carta => carta.ColecaoId)  // Chave estrangeira em Carta
             .OnDelete(DeleteBehavior.Cascade);
     }
+
 }

@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
-using CP1Enterprise_EntityFramework_FIAP.Persistence;
+using CP1Enterprise_EntityFramework_FIAP;
+using CP1Enterprise_EntityFramework_FIAP.Web.Persistence;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 {
-    public class HospedeController : Controller
+    public class CartaController : Controller
     {
         private readonly OracleDbContext _context;
 
@@ -17,13 +18,6 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
         }
 
         // GET: Carta
-        public async Task<IActionResult> Index()
-        {
-            return _context.Cartas != null ?
-                        View(await _context.Cartas.Where(x => x.EstaAtivo == true).ToListAsync()) :
-                        Problem("Entity set 'OracleDbContext.Cartas'  is null.");
-        }
-
         public async Task<IActionResult> IndexAll()
         {
             return _context.Cartas != null ?

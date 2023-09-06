@@ -1,8 +1,8 @@
-using CP1Enterprise_EntityFramework_FIAP.Persistence;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
 using CP1Enterprise_EntityFramework_FIAP.Web.Validations;
+using CP1Enterprise_EntityFramework_FIAP.Web.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,6 @@ builder.Services.AddDbContext<OracleDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection"));
 });
 
-builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<Carta>, CartaValidator>();
 
 var app = builder.Build();
