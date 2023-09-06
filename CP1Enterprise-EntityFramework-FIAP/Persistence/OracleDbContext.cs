@@ -1,29 +1,57 @@
-﻿using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
+﻿using System;
+using CP1Enterprise_EntityFramework_FIAP.Models;
 using Microsoft.EntityFrameworkCore;
+using CP1.Models;
 
-namespace CP1Enterprise_EntityFramework_FIAP.Web.Persistence;
-
-public class OracleDbContext : DbContext
+namespace CP1Enterprise_EntityFramework_FIAP.Persistence
 {
-    public OracleDbContext(DbContextOptions<OracleDbContext>
-        options) : base(options)
+    public class OracleDbContext : DbContext
     {
+        public OracleDbContext()
+        {
+        }
+
+        public OracleDbContext(DbContextOptions<OracleDbContext> options)
+        : base(options)
+        {
+
+        }
+        public DbSet<Carta> Cartas { get; set; }
+
+        public DbSet<Colecao> Colecoes { get; set; }
+
+        public DbSet<Links> Links { get; set; }
+
+        public DbSet<RegrasEspeciais> RegrasEspeciais { get; set; }
+
+        public DbSet<Filtro> Filtros { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Um pra um
+
+            modelBuilder.Entity<Carta>()
+                .HasOne(c => c.Links)
+                .WithOne(l => l.Carta)
+                .HasForeignKey<Links>(l => l.Id);
+
+            modelBuilder.Entity<Carta>()
+                .HasOne(c => c.Ilustrador)
+                .WithOne(i => i.Carta)
+                .HasForeignKey<Ilustrador>(i => i.Id);
+
+            modelBuilder.Entity<Carta>()
+                .HasOne(c => c.Colecao) // Relacionamento de Carta com Colecao
+                .WithOne(co => co.Carta) // Uma Colecao pode ter várias Cartas
+                .HasForeignKey<Colecao>(co => co.Id); // Chave estrangeira em Carta
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+
+
+
+
     }
-
-    public DbSet<Carta> Cartas { get; set; }
-    public DbSet<Colecao> Colecoes { get; set; }
-    public DbSet<Idioma> Idiomas { get; set; }
-    public DbSet<Ilustrador> Ilustradores { get; set; }
-    public DbSet<Links> Links { get; set; }
-    public DbSet<RegrasEspeciais> RegrasEspeciais { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Carta>()
-            .HasOne(carta => carta.Colecoes)  // Relacionamento de Carta com Colecao
-            .WithMany(colecao => colecao.Cartas)  // Uma Colecao pode ter várias Cartas
-            .HasForeignKey(carta => carta.ColecaoId)  // Chave estrangeira em Carta
-            .OnDelete(DeleteBehavior.Cascade);
-    }
-
 }
+

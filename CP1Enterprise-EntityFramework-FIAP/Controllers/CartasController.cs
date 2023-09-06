@@ -1,40 +1,46 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using CP1Enterprise_EntityFramework_FIAP.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CP1Enterprise_EntityFramework_FIAP.Web.Entities;
-using CP1Enterprise_EntityFramework_FIAP;
-using CP1Enterprise_EntityFramework_FIAP.Web.Persistence;
+using CP1Enterprise_EntityFramework_FIAP.Models;
+using CP1Enterprise_EntityFramework_FIAP.Persistence;
 
-namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
+namespace scryrall_admin.Controllers
 {
-    public class CartaController : Controller
+    public class CartasController : Controller
     {
         private readonly OracleDbContext _context;
 
-
-        public CartaController(OracleDbContext context)
+        public CartasController(OracleDbContext context)
         {
             _context = context;
         }
 
-        // GET: Carta
-        public async Task<IActionResult> IndexAll()
+        // GET: Cartas
+        public async Task<IActionResult> Index()
         {
             return _context.Cartas != null ?
-                View(await _context.Cartas.ToListAsync()) :
-                Problem("Entity set 'OracleDbContext.Cartas'  is null.");
+                        View(await _context.Cartas.ToListAsync()) :
+                        Problem("Entity set 'OracleDbContext.Cartas'  is null.");
         }
 
-        // GET: Carta/Details/5
+        // GET: Cartas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Cartas == null)
             {
                 return NotFound();
             }
-
             var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
+                .Include(c => c.Colecao)
+                .Include(c => c.Ilustrador)
+                .Include(c => c.Links)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (carta == null)
             {
                 return NotFound();
@@ -43,36 +49,48 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             return View(carta);
         }
 
-        // GET: carta/Create
+        // GET: Cartas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: carta/Create
+        // POST: Cartas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Create([Bind("Tipo,Descricao,FotoUrl")] Carta carta)
         {
+            try
+            {
 
-            if (!ModelState.IsValid) return View(carta);
 
-            _context.Add(carta);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                _context.Add(carta);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(carta);
         }
 
-        // GET: Carta/Edit/5
+        // GET: Cartas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Cartas == null)
             {
                 return NotFound();
             }
-
-            var carta = await _context.Cartas.FindAsync(id);
+            var carta = await _context.Cartas
+                .Include(c => c.Colecao)
+                .Include(c => c.Ilustrador)
+                .Include(c => c.Links)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (carta == null)
             {
                 return NotFound();
@@ -80,42 +98,40 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             return View(carta);
         }
 
-        // POST: Carta/Edit/5
+        // POST: Cartas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CartaId,Nome,Tipo,Descricao,FotoUrl")] Carta carta)
+        public async Task<IActionResult> Edit(int id, Carta carta)
         {
-            if (id != carta.CartaId)
+            if (id != carta.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
-                {
-                    _context.Update(carta);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CartaExists(carta.CartaId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(carta);
+
+
+                await _context.SaveChangesAsync();
+
+
             }
-            return View(carta);
+            catch (DataException)
+            {
+
+            }
+            return RedirectToAction(nameof(Index));
+
+
+
+
         }
 
-        // GET: Carta/Delete/5
+        // GET: Cartas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Cartas == null)
@@ -124,7 +140,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             }
 
             var carta = await _context.Cartas
-                .FirstOrDefaultAsync(m => m.CartaId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (carta == null)
             {
                 return NotFound();
@@ -133,7 +149,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
             return View(carta);
         }
 
-        // POST: Carta/Delete/5
+        // POST: Cartas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -154,7 +170,7 @@ namespace CP1Enterprise_EntityFramework_FIAP.Web.Controllers
 
         private bool CartaExists(int id)
         {
-            return (_context.Cartas?.Any(e => e.CartaId == id)).GetValueOrDefault();
+            return (_context.Cartas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

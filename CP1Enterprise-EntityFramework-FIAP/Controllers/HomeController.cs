@@ -23,16 +23,16 @@ namespace CP1Enterprise_EntityFramework_FIAP.Controllers
             return View();
         }
 
-        public IActionResult TermsOfUse()
+        public IActionResult Cartas()
         {
-            return View();
+            return View(Index);
         }
 
         public JsonResult TesteJson()
         {
             var JsonOutput = new
             {
-                Texto = "Teste",
+                Texto = "Teste do JSON",
                 Data = DateTime.UtcNow
             };
 

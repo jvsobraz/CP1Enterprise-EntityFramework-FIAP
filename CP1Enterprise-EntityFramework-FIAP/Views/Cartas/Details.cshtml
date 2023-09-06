@@ -1,0 +1,87 @@
+﻿@model CP1Enterprise_EntityFramework_FIAP.Models.Carta
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div>
+    <h4>Carta</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FotoUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FotoUrl)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.Links)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Foto</th>
+                    <th>Logo</th>
+                    <th>Coleção</th>
+                    <th>Ilustrador</th>
+                    <th>Ano de lançamento</th>
+                    <th>Url da Página</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="@Model.FotoUrl" alt="image film" style="max-width: 400px; max-height: 500px;" />
+                    </td>
+
+                    <td>
+                        @if (Model.Colecao != null)
+                        {
+                            <img src="@(!string.IsNullOrEmpty(Model.Colecao.LogoUrl) ? Url.Content(Model.Colecao.LogoUrl) : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fscryfall.com%2F&psig=AOvVaw3IcdQimTxws9PvbtRplzjU&ust=1694115301824000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCLCgy7jdloEDFQAAAAAdAAAAABAE")" alt="image film" style="max-width: 400px; max-height: 500px;" />
+                        }
+                        else
+                        {
+                            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fscryfall.com%2F&psig=AOvVaw3IcdQimTxws9PvbtRplzjU&ust=1694115301824000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCLCgy7jdloEDFQAAAAAdAAAAABAE" alt="image film" style="max-width: 400px; max-height: 500px;" />
+                        }
+                    </td>
+
+
+
+                    <td>
+                        @Html.DisplayFor(model => model.Colecao.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Ilustrador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Colecao.Ano)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Links.Url)
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

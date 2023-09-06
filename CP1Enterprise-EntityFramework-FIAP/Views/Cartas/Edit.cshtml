@@ -1,0 +1,75 @@
+﻿@model CP1Enterprise_EntityFramework_FIAP.Models.Carta
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Carta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotoUrl" class="control-label"></label>
+                <input asp-for="FotoUrl" class="form-control" />
+                <span asp-validation-for="FotoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Links.Url" class="control-label">Link URL</label>
+                <input asp-for="Links.Url" class="form-control" />
+                <span asp-validation-for="Links.Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ilustrador.Nome" class="control-label">Nome Ilustrador</label>
+                <input asp-for="Ilustrador.Nome" class="form-control" />
+                <span asp-validation-for="Ilustrador.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Colecao.Nome" class="control-label">Nome Coleção</label>
+                <input asp-for="Colecao.Nome" class="form-control" />
+                <span asp-validation-for="Colecao.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Colecao.Ano" class="control-label"></label>
+                <input asp-for="Colecao.Ano" class="form-control" />
+                <span asp-validation-for="Colecao.Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Colecao.LogoUrl" class="control-label"></label>
+                <input asp-for="Colecao.LogoUrl" class="form-control" />
+                <span asp-validation-for="Colecao.LogoUrl" class="text-danger"></span>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

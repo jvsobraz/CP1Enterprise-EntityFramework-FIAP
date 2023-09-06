@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CP1Enterprise_EntityFramework_FIAP.Models.Carta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de Cartas</h1>
+<p>Lista de todas as cartas.</p>
+<p>
+    <a asp-action="Create">Criar Nova Carta</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <!-- Coluna da Imagem -->
+                @Html.DisplayNameFor(model => model.FotoUrl)
+            </th>
+            <th>
+                <!-- Coluna do Tipo -->
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                <!-- Coluna da Descrição -->
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <!-- Imagem da Carta -->
+                    @if (item.FotoUrl != null)
+                    {
+                        <img src="@Url.Content(item.FotoUrl)" alt="Imagem da Carta" style="max-width: 400px; max-height: 500px;" />
+                    }
+                </td>
+
+                <td>
+                    <!-- Tipo da Carta -->
+                @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    <!-- Descrição da Carta -->
+                @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+
+                <td>
+                    <!-- Links para Editar, Detalhes e Excluir -->
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
