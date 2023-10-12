@@ -1,0 +1,63 @@
+using CP1Enterprise_EntityFramework.Core.Domain.Entites.Card;
+using CP1Enterprise_EntityFramework.Data.Context;
+using CP1Enterprise_EntityFramework.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+
+namespace CP1Enterprise_EntityFramework.UnitTests;
+
+public class SetRepositoryTests
+{
+    private OracleDbContext _context;
+    private BaseRepository<Set> _repository;
+    private IMemoryCache _cache;
+
+    public SetRepositoryTests()
+    {
+        var options = new DbContextOptionsBuilder<OracleDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
+
+        _context = new OracleDbContext(options);
+        _cache = new MemoryCache(new MemoryCacheOptions());
+        _repository = new BaseRepository<Set>(_context, _cache);
+    }
+
+    [Fact]
+    public async void GetAll_ShouldReturnEntity()
+    {
+        // Arrange
+        var Set = new Set(){Name = "Wilds of Eldraine", Acronym = "WOF", 
+            ReleaseDate = DateTime.Now, LogoUrl = "http://logo.com.br"};
+        await _context.Sets.AddAsync(Set);
+        await _context.SaveChangesAsync();
+        
+        // Act
+        var setAdded = _context.Sets.Find(Set.Id);
+        
+        // Assert
+        Assert.NotNull(setAdded);
+        Assert.Equal(Set.Name, setAdded.Name);
+    }
+
+    [Fact]
+    public async void GetAll_ShouldUseCache()
+    {
+        //Arrange
+        var set = new Set(){Name = "Strixhaven: School of Mages", Acronym = "STX", 
+            ReleaseDate = DateTime.Now, LogoUrl = "http://logo.com.br"};
+        await _context.Sets.AddAsync(set);
+        await _context.SaveChangesAsync();
+        
+        //Act
+        var retrievedSet = await _repository.GetByIdAsync(set.Id);
+        
+        //Assert
+        Assert.Same(retrievedSet,_cache.Get($"{typeof(Set).Name}_{set.Id}"));
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
+    }
+}

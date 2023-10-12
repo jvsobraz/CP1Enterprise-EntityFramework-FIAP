@@ -2,7 +2,7 @@
 using CP1Enterprise_EntityFramework_FIAP.Edits;
 using System;
 using System.ComponentModel.DataAnnotations;
-using CP1.Models;
+using CP1Enterprise_EntityFramework_FIAP.Models;
 
 namespace CP1Enterprise_EntityFramework_FIAP.Models
 {
